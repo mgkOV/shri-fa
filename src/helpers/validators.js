@@ -43,14 +43,12 @@ export const validateFieldN2 = ({ star, square, triangle, circle }) => {
 
 // 3. Количество красных фигур равно кол-ву синих.
 export const validateFieldN3 = ({ star, square, triangle, circle }) => {
-  const equalNum = (...args) => {
-    const nums = R.countBy((i) => i)([...args]);
+  const equalNum = (obj) => R.equals(R.prop("red", obj), R.prop("blue", obj));
 
-    return R.equals(nums.red, nums.blue);
-  };
+  R.compose(equalNum, count)([star, square, triangle, circle]);
 
   // если 0 тоже true
-  return equalNum(star, square, triangle, circle);
+  return R.compose(equalNum, count)([star, square, triangle, circle]);
 };
 
 // 4. Синий круг, красная звезда, оранжевый квадрат
